@@ -1,0 +1,26 @@
+<div *ngIf="weatherService.weatherData$ | async as data" class="flex flex-col bg-white rounded-xl shadow-2xl p-4">
+    <div class="flex flex-col items-center justify-center">
+        <h1 class="text-5xl font-semibold">{{data.name}}</h1>
+        <h2 class="text-2xl">{{data.weather[0].description}}</h2>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-around">
+        <div class="flex items-start">
+            <div>
+                <img [src]='"http://openweathermap.org/img/wn/"+ data.weather[0].icon +"@2x.png"' alt="weatherImg"/>
+            </div>
+            <div class="flex flex-col justify-start">
+                <p class="font-bold text-5xl">{{data.main.temp}} {{getTempUnit((weatherService.weatherUnits$.asObservable() | async)!)}}</p>
+                <p>Feels Like: <b>{{data.main.feels_like}}</b> {{getTempUnit((weatherService.weatherUnits$.asObservable() | async)!)}}</p>
+            </div>
+        </div>
+        <div class="flex flex-col items-start">
+            <p class="p-2">Humidity: <b>{{data.main.humidity}}</b> %</p>
+            <hr class="h-px w-full bg-gray-300 border-0 dark:bg-gray-700">
+            <p class="p-2">Sea Level: <b>{{data.main.pressure}}</b> hPa</p>
+            <hr class="h-px w-full bg-gray-300 border-0 dark:bg-gray-700">
+            <p class="p-2">Wind Speed: <b>{{data.wind.speed}}</b> {{getSpeedUnit((weatherService.weatherUnits$.asObservable() | async)!)}}</p>
+            <hr class="h-px w-full bg-gray-300 border-0 dark:bg-gray-700">
+            <p class="p-2">Visibility: <b>{{data.visibility}}</b></p>
+        </div>
+    </div>
+</div>
